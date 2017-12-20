@@ -1,0 +1,23 @@
+			<div class="card mb-3">
+				<img ng-if="data.foto" class="card-img-top" src="{{urlUpload + '/' + data.foto}}">
+				<img ng-if="!data.foto" class="card-img-top" src="assets/img/default-photo.jpg">
+				<table class="table mb-0">
+					<tbody>
+						<tr>
+							<td>Nama</td>
+							<td>{{data.nama}}</td>
+						</tr>
+						<tr>
+							<td>Username</td>
+							<td>{{data.username}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="card mb-3">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item text-center">
+						<a href="#!/setting/profile" class="btn-full text-info"><i class="fa fa-fw fa-cog"></i> Seting Profil</a>
+					</li>
+				</ul>
+			</div>

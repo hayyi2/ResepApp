@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-controller="TemplateController">
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Resep App</title>
+
+	<!-- Bootstrap Core CSS -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Custom CSS -->
+	<link href="assets/css/style.css" rel="stylesheet">
+	<!-- Custom Fonts -->
+	<link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
+<body ng-class="activeSideNav">
+	<header class="clearfix">
+		<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+			<a class="navbar-toggler" aria-label="Toggle navigation" ng-click="side_nav_toggle()">
+				<span class="navbar-toggler-icon"></span>
+			</a>
+			<a class="navbar-brand" href="#!/beranda">Resep App</a>
+
+			<div class="float-right">
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown">
+						<a  ng-click="side_nav_remove()" class="nav-link dropdown-toggle text-nowrap" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<div class="icon-menu avatar"><i class="fa fa-user fa-fw"></i></div>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<div ng-if="!authData">
+								<a ng-class="((activeMenu == 'login') ? 'active ' : '') + 'dropdown-item'" href="#!/login">
+									<i class="fa fa-sign-in fa-fw"></i> 
+									Masuk
+								</a>
+								<a ng-class="((activeMenu == 'register') ? 'active ' : '') + 'dropdown-item'" href="#!/register">
+									<i class="fa fa-user-plus fa-fw"></i> 
+									Daftar
+								</a>
+							</div>
+							<div ng-if="authData">
+								<a ng-class="((activeMenu == 'activity') ? 'active ' : '') + 'dropdown-item'" href="#!/activity">
+									<i class="fa fa-tasks fa-fw"></i> 
+									Aktifitas
+								</a>
+								<a ng-class="((activeMenu == 'profile') ? 'active ' : '') + 'dropdown-item'" href="#!/profile">
+									<i class="fa fa-user fa-fw"></i> 
+									Profil
+								</a>
+								<div class="dropdown-divider"></div>
+								<a ng-class="((activeMenu == 'setting-profile') ? 'active ' : '') + 'dropdown-item'" href="#!/setting/profile">
+									<i class="fa fa-cog fa-fw"></i> 
+									Seting Profil
+								</a>
+								<a ng-class="((activeMenu == 'change-password') ? 'active ' : '') + 'dropdown-item'" href="#!/setting/password">
+									<i class="fa fa-key fa-fw"></i> 
+									Ubah Password
+								</a>
+								<div class="dropdown-divider"></div>
+								<a ng-class="((activeMenu == 'logout') ? 'active ' : '') + 'dropdown-item'" href="#!/logout">
+									<i class="fa fa-sign-out fa-fw"></i> 
+									Keluar
+								</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<ul class="side-nav">
+				<li ng-class="((activeMenu == 'beranda') ? 'active ' : '') + 'nav-item'">
+					<a class="nav-link" href="#!/beranda" ng-click="side_nav_toggle()">
+						<i class="fa fa-home fa-fw"></i> 
+						Beranda
+					</a>
+				</li>
+				<li ng-if="authData" ng-class="((activeMenu == 'activity') ? 'active ' : '') + 'nav-item'">
+					<a class="nav-link" href="#!/activity" ng-click="side_nav_toggle()">
+						<i class="fa fa-tasks fa-fw"></i> 
+						Aktifitas
+					</a>
+				</li>
+				<div class="dropdown-divider"></div>
+				<!-- <li ng-class="((activeMenu == 'favorite') ? 'active ' : '') + 'nav-item'">
+					<a class="nav-link" href="#!/favorite" ng-click="side_nav_toggle()">
+						<i class="fa fa-heart fa-fw"></i> 
+						Favorit
+					</a>
+				</li> -->
+				<li ng-class="((activeMenu == 'category' + category.kategori_id) ? 'active ' : '') + 'nav-item'" ng-repeat="category in categories">
+					<a class="nav-link" href="#!/category/{{category.kategori_id}}" ng-click="side_nav_toggle()">
+						<i class="fa fa-fw {{category.icon}}"></i> 
+						{{category.nama}}
+					</a>
+				</li>
+				<div class="dropdown-divider"></div>
+				<li ng-class="((activeMenu == 'about') ? 'active ' : '') + 'nav-item'">
+					<a class="nav-link" href="#!/about" ng-click="side_nav_toggle()">
+						<i class="fa fa-info-circle fa-fw"></i> 
+						Tentang
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	<div class="body" ng-click="side_nav_remove()">
+		<div class="container-fluid">
+			<div class="page-title" ng-if="titleMedia">
+				<div class="media mt-2 mb-2">
+					<img ng-if="data.foto" class="d-flex mr-2 circle" src="{{urlUpload + '/' + titleMedia}}" style="width: 40px; height: 40px;">
+					<img ng-if="!data.foto" class="d-flex mr-2 circle" src="assets/img/default-photo.jpg" style="width: 40px; height: 40px;">
+					<div class="media-body">
+						<h3 class="mt-0 mb-0">
+							{{titlePage}}
+						</h3>
+						<span ng-if="subtitleGroup" class="mb-2 text-secondary">{{subtitleGroup}}</span>
+					</div>
+				</div>
+				<div ng-if="message" class="alert alert-{{message.type}} mb-2">
+					<button type="button" class="close" ng-click="close_message()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					{{message.data}}
+				</div>
+			</div>
+			<div class="page-title" ng-if="!titleMedia">
+				<h3 ng-class="(subtitleGroup)">
+					<i ng-if="iconPage" class="fa fa-fw {{iconPage}}"></i> 
+					{{titlePage}}
+				</h3>
+				<span ng-if="subtitleGroup" class="mb-2 text-secondary">{{subtitleGroup}}</span>
+				<div ng-if="message" class="alert alert-{{message.type}} mb-2">
+					<button type="button" class="close" ng-click="close_message()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					{{message.data}}
+				</div>
+			</div>
+			<div class="page-content">
+				<div class="ng-view"></div>
+			</div>
+		</div>
+	</div>
+	<div class="backgrund" ng-click="side_nav_remove()" style="position: fixed;width: 100%;height: 100%;"></div>
+
+	<!-- jQuery -->
+	<script src="assets/js/jquery-3.2.1.min.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="assets/js/popper.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<!-- script -->
+	<script src="assets/js/script.js"></script>
+	<!-- angular -->
+	<script src="assets/vendors/angular/angular.min.js"></script>
+	<script src="assets/vendors/angular/angular-route.min.js"></script>
+	<script src="assets/js/apps/app.js"></script>
+	<script src="assets/js/apps/routes.js"></script>
+	<script src="assets/js/apps/services.js"></script>
+	<script src="assets/js/apps/controllers.js"></script>
+</body>
+</html>

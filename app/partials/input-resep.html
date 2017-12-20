@@ -1,0 +1,33 @@
+			<form class="mb-3" ng-submit="input()">
+				<div class="form-group">
+					<label>Judul Resep</label>
+					<input ng-model="nama_resep" type="text" class="form-control" placeholder="Judul Resep" required="">
+				</div>
+				<div class="form-group">
+					<label>Kategori</label>
+					<select placeholder="Kategori Resep" class="form-control" placeholder="Kategori" ng-model="kategori_id" required="">
+						<option ng-repeat="data in dataCategory" value="{{data.kategori_id}}">{{data.nama}}</option>
+					</select>
+				</div>
+				<!-- <div class="form-group">
+					<label>Gambar</label>
+					<input type="file" files-input file-model="gambar" class="form-control" required="">
+				</div> -->
+				<div class="form-group">
+					<label>Deskripsi</label>
+					<textarea ng-model="deskripsi" class="form-control" placeholder="Deskripsi" required=""></textarea>
+				</div>
+				<div class="form-group">
+					<label>Bahan</label>
+					<textarea ng-model="bahan" class="form-control" placeholder="Bahan" required=""></textarea>
+					<small class="form-text text-muted">Pisahkan bahan dengan baris baru.</small>
+				</div>
+				<div class="form-group">
+					<label>Langkah Memasak</label>
+					<textarea ng-model="cara_membuat" class="form-control" placeholder="Langkah Memasak" required=""></textarea>
+					<small class="form-text text-muted">Pisahkan lankah dengan baris baru.</small>
+				</div>
+				<div class="form-group mt-4">
+					<button type="submit" class="btn btn-primary btn-block"><i class="fa fa-plus-circle fa-fw"></i> Tambah Resep</button>
+				</div>
+			</form>

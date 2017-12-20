@@ -1,0 +1,57 @@
+			<div class="card mb-3">
+				<ul class="list-group list-group-flush">
+					<img ng-if="data.gambar" src="{{urlUpload + '/' + data.gambar}}">
+					<img ng-if="!data.gambar" src="assets/img/default-resep.png">
+					<li class="list-group-item">
+						<div class="mb-1">
+							<small class="text-secondary">
+								<i class="fa fa-fw fa-clock-o"></i>
+								{{data.tanggal}}
+							</small>
+							<a href="#!/category/{{data.kategori_id}}" class="text-secondary">
+								<small>
+									<i class="fa fa-fw {{data.icon}}"></i> 
+									{{data.nama_kategori}}
+								</small>
+							</a>
+						</div>
+						{{data.deskripsi}}
+					</li>
+					<li class="list-group-item">
+						<h5 class="mt-0 mb-1">
+							Bahan Masak
+						</h5>
+						<ol type="1">
+							<li ng-repeat="item in data.bahan_data track by $index">{{item}}</li>
+						</ol>
+					</li>
+					<li class="list-group-item">
+						<h5 class="mt-0 mb-1">
+							Lankah Memasak
+						</h5>
+						<ol type="1">
+							<li ng-repeat="item in data.cara_membuat_data track by $index">{{item}}</li>
+						</ol>
+					</li>
+				</ul>
+			</div>
+			<div class="card mb-3">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<div class="media">
+							<a href="#!/user/{{data.user_id}}">
+								<img ng-if="data.foto" class="d-flex mr-2 circle" src="{{urlUpload + '/' + data.foto}}" style="width: 40px; height: 40px;">
+								<img ng-if="!data.foto" class="d-flex mr-2 circle" src="assets/img/default-photo.jpg" style="width: 40px; height: 40px;">
+							</a>
+							<div class="media-body">
+								<a href="#!/user/{{data.user_id}}" class="text-dark">
+									<h5 class="mt-0 mb-0">
+										{{data.nama}}
+									</h5>
+									<small class="text-secondary">@{{data.username}}</small>
+								</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
